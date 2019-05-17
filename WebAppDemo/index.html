@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Bootstrap Reference With JS Reference-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- CSS pages-->
+    <!-- Algolia -->
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.14.0"></script>
+    <!--CurrencyFormatter-->
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/currencyformatter.js/2.2.0/currencyFormatter.js"></script>
+    <!--Flatpickr-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+            crossorigin=""></script>
+    <!-- My CSS and JS -->
+    <link rel="stylesheet" type="text/css" href="myStyleSheet.css" />
+    <script src="myJavaScript.js"></script>
+    <link rel="shortcut icon" href="images/Tindex.ico">
+</head>
+<body>
+    <nav class="navBar">
+        <div id="nav-btn">
+            <img id="nav-icon" src="images/menu.png" alt="Menu Icon" />
+        </div>
+        <ul class="navList show">
+            <li><a class="highlight" href="http://cis-iis2.temple.edu/Fall2018/CIS3344_tua07182/">Home Page</a></li>
+            <li><a href="#top">Top</a></li>
+            <li><a href="#searchBox">Search</a></li>
+            <li><a href="#flatpickr">Pick Date</a></li>
+            <li><a href="#mapBox">Gotta Go</a></li>
+            <li><a href="http://cis-iis2.temple.edu/Fall2018/cis3344_tua07182/TutorialProject/">Tutorial</a></li>
+            <li><a href="#refBox">References</a></li>
+            <li><a href="#resBox">Resources</a></li>
+            <li><a href="#footer">Footer</a></li>
+        </ul>
+    </nav>
+    <div class="clear"></div>
+    <header>
+        <h1 id="top">Gotta Go</h1>
+    </header>
+
+    <main>
+        <!--Search Box-->
+        <div id="searchBox" class="box">
+            <div class="card">
+                <div class="card-header">
+                    <a id="searchBoxHeader" class="card-link" data-toggle="collapse" href="#search">
+                        Select a Location
+                    </a>
+                </div>
+                <!--Search Content-->
+                <div id="search" class="container-fluid collapse" data-parent="#searchBox">
+                    <div class="card-body">
+                        <label>You can Search by city here.</label><br />
+                        <input type="search" id="citySearch" class="form-control d-inline" placeholder="Search by City" />
+                        <button id="citySearchBtn" type="button" class="btn btn-success d-inline">Submit</button><!---->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Flatpickr-->
+        <div id="flatpickr" class="box">
+            <div class="card">
+                <div class="card-header">
+                    <a id="flatpickrHeader" class="card-link" data-toggle="collapse" href="#flatContent">
+                        Pick a Date
+                    </a>
+                </div>
+                <!--Flatpickr Content-->
+                <div id="flatContent" class="container-fluid collapse" data-parent="#flatpickr">
+                    <div class="card-body">
+                        <input id="flatpikrDiv" class="form-control d-inline" type="text" placeholder="Select Date..">
+                        <button id="confirmDatesBtn" type="button" class="btn btn-success d-inline">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Travel Days Box-->
+        <div id="tripInfo" class="box">
+            <div class="card">
+                <div class="card-header">
+                    <a id="tripInfoHeader" class="card-link" data-toggle="collapse" href="#tripInfoContent">
+                        Travel Information
+                    </a>
+                </div>
+                <!--Travel Days Content-->
+                <div id="tripInfoContent" class="container-fluid collapse" data-parent="#tripInfo">
+                    <div class="card-body">
+                        <label>Location:</label><input id="location" class="form-control d-inline" readonly><br>
+                        <label>Days:</label><input id="days" class="form-control d-inline" readonly>
+                        <label>Currency:</label><input id="currency" class="form-control d-inline" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Map Box-->
+        <div id="mapBox" class="box">
+            <div class="card">
+                <div class="card-header">
+                    <a id="mapBoxHeader" class="card-link" data-toggle="collapse" href="#map">
+                        Gotta Go
+                    </a>
+                </div>
+                <!--Map Content-->
+                <div id="map" class="container-fluid collapse show" data-parent="#mapBox">
+                    <div class="card-body">
+                        <label>Where?</label><br />
+                        <div id="finalMap"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Refrences Box-->
+        <div id="refBox" class="box">
+            <div class="card">
+                <div class="card-header">
+                    <a id="mapBoxHeader" class="card-link" data-toggle="collapse" href="#ref">
+                        References
+                    </a>
+                </div>
+                <!--Ref Content-->
+                <div id="ref" class="container-fluid collapse" data-parent="#refBox">
+                    <div class="card-body">
+
+                        <p>List of references and things I used to make this web app.</p>
+                        <p>
+                            <ul>
+                                <li>Leaflet Homepage: <a href="https://leafletjs.com/">Leaflet</a></li>
+                                <li>Developer of Leaflet: <a href="https://agafonkin.com/">Vladimir Agafonkin</a></li>
+                                <li>Map Software used: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></li>
+                                <li>Map API and Tileset used: <a href="https://www.mapbox.com">MapBox</a></li>
+                                <li>Leaflet Github page: <a href="https://github.com/Leaflet/Leaflet">Github</a></li>
+                                <li>Bootstrap 4: <a href="https://www.w3schools.com/bootstrap4/default.asp">BootStrap</a></li>
+                                <li>If I have time: Goople Maps API: <a href="https://developers.google.com/maps/documentation">GMP</a></li>
+                                <li>Flatpickr - JS datetime picker: <a href="https://flatpickr.js.org/">Flatpickr</a></li>
+                                <li>CurrencyFormatting: <a href="https://osrec.github.io/currencyFormatter.js">CurencyFormatter.js</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Resources and tools Box-->
+        <div id="resBox" class="box">
+            <div class="card">
+                <div class="card-header">
+                    <a id="mapBoxHeader" class="card-link" data-toggle="collapse" href="#res">
+                        Resources and Tools
+                    </a>
+                </div>
+                <!--Res Content-->
+                <div id="res" class="container-fluid collapse" data-parent="#resBox">
+                    <div class="card-body">
+                        <p>Extra resources and tools</p>
+                        <ul>
+                            <li>Mapbox API documentation: <a href="https://www.mapbox.com/api-documentation/#introduction">MapBox API</a></li>
+                            <li>More About OpenStreetMap: <a href="https://wiki.openstreetmap.org/wiki/Main_Page">OpenStreetMap Project</a></li>
+                            <li>SearchBox API: <a href="https://community.algolia.com/places">Algolia</a></li>
+                            <li>JS framework used to format currency: <a href="https://github.com/osrec/currencyFormatter.js/">CurrencyFormatter.js</a></li>
+                            <li>Stamen (another map API and tileset): <a href="http://maps.stamen.com/#terrain/12/37.7706/-122.3782">Stamen</a></li>
+                            <li>Thunderforest (another map API and tileset): <a href="https://www.thunderforest.com/terms">Thunderforest</a></li>
+                            <li>Flatpickr.js: <a href="https://github.com/flatpickr/flatpickr">Github</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--Collapsible footer info-->
+    <footer id="footer">
+        <div class="card">
+            <div class="card-header text-center">
+                <a id="footerHeader" class="card-link" data-toggle="collapse" href="#collapseOne">
+                    Made By
+                </a>
+            </div>
+            <!--Collapsible footer info content-->
+            <div id="collapseOne" class="collapse text-center" data-parent="#footer">
+                <div class="card-body">
+                    <p> &copy; Drew Watson, <a href="mailto:dru.w@temple.edu">dru.w@temple.edu </a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        $(document).ready(function () {
+            //Variables
+            var locationSearch;
+            var calendar;
+            var confirmDays;
+            var confirmMonth;
+            var confirmYear;
+            var confirmEndDays;
+            var confirmEndMonth;
+            var confirmEndYear;
+            var cX;
+            var cY;
+
+            //Map example final
+            var bathrooms = L.layerGroup();
+            var cityBuildings = L.layerGroup();
+            var museums = L.layerGroup();
+            var colleges = L.layerGroup();
+            var parks = L.layerGroup();
+            var bikeRental = L.layerGroup();
+            var resturants = L.layerGroup();
+            var amusements = L.layerGroup();
+            var beware = L.layerGroup();
+
+            //Bathrooms
+            L.marker([39.951107, -75.181007]).bindPopup("There is a public bathroom here!").addTo(bathrooms);
+            L.marker([39.942703, -75.157031]).bindPopup("There is a public bathroom here!").addTo(bathrooms);
+            L.marker([39.942703, -75.157031]).bindPopup("There is a public bathroom here!").addTo(bathrooms);
+            L.marker([39.963321, -75.174586]).bindPopup("There is a public bathroom here!").addTo(bathrooms);
+            L.marker([39.953559, -75.164493]).bindPopup("There is a public bathroom here: Underground Concourse").addTo(bathrooms);
+            L.marker([39.953894, -75.167545]).bindPopup("There is a public bathroom here: Suburban Station!").addTo(bathrooms);
+            L.marker([39.979132, -75.155298]).bindPopup("There is a public bathroom here!").addTo(bathrooms);
+            L.marker([39.981841, -75.156126]).bindPopup("There is a public bathroom here: 7-Eleven!").addTo(bathrooms);
+            L.marker([39.953908, -75.189423]).bindPopup("There is a public bathroom here: Wawa!").addTo(bathrooms);
+            L.marker([39.949185, -75.164088]).bindPopup("There is a public bathroom here: Wawa!").addTo(bathrooms);
+            L.marker([39.955105, -75.169643]).bindPopup("There is a public bathroom here: PortaPotty!").addTo(bathrooms);
+          
+            //City buildings
+            L.marker([39.952446, -75.163511]).bindPopup("City Hall").addTo(cityBuildings);
+            L.marker([39.953996, -75.164388]).bindPopup("Municipal Services Building").addTo(cityBuildings);
+
+            //Museums
+            L.marker([39.965324, -75.180699]).bindPopup("Art Museum").addTo(museums);
+            L.marker([39.945993, -75.140959]).bindPopup("Seaport Museum").addTo(museums);
+
+            //Parks
+            L.marker([39.966191, -75.12861]).bindPopup("Penn Treaty Park").addTo(parks);
+            L.marker([39.953203, -75.139457]).bindPopup("Race Street Pier").addTo(parks);
+            L.marker([39.951148, -75.149544]).bindPopup("Independence National Historic Park").addTo(parks);
+            L.marker([39.961528, -75.169063]).bindPopup("Matthais Baldwin Park").addTo(parks);
+            L.marker([39.961443, -75.187865]).bindPopup("Drexel Park").addTo(parks);
+            L.marker([39.902013, -75.182748]).bindPopup("Roosevelt Park").addTo(parks);
+
+
+            //Rideshare
+            L.marker([39.960604, -75.141302]).bindPopup("Rent a bike here").addTo(bikeRental);
+            L.marker([39.952382, -75.139863]).bindPopup("Rent a bike here").addTo(bikeRental);
+            L.marker([39.962983, -75.166113]).bindPopup("Rent a bike here").addTo(bikeRental);
+
+            //Colleges
+            L.marker([39.979861, -75.158876]).bindPopup("Temple University").addTo(colleges);
+            L.marker([39.95902, -75.193412]).bindPopup("Drexel University").addTo(colleges);
+            L.marker([39.956652, -75.196202]).bindPopup("Penn University").addTo(colleges);
+            L.marker([39.946654, -75.206845]).bindPopup("University of the Sciences in Philadelphia").addTo(colleges);
+            L.marker([39.947964, -75.122063]).bindPopup("Rutgers University: Camden").addTo(colleges);
+
+            //Food
+            L.marker([39.955172, -75.19853]).bindPopup("Koreanas, good ass korean food").addTo(resturants);
+            L.marker([39.952716, -75.171743]).bindPopup("Koreanas 2, also good ass korean food").addTo(resturants);
+            L.marker([39.936324, -75.158399]).bindPopup("La Primas, Great Spanish food").addTo(resturants);
+            L.marker([39.955292, -75.152889]).bindPopup("China Town").addTo(resturants);
+
+
+            //Amusements/Tourist Traps
+            L.marker([39.968365, -75.172773]).bindPopup("Eastern State Penitentiary").addTo(amusements);
+            L.marker([39.956248, -75.138625]).bindPopup("Dave & Buster's").addTo(amusements);
+            L.marker([39.905941, -75.166418]).bindPopup("Citizens Bank Park").addTo(amusements);
+
+            //Beware
+            L.marker([39.944667, -75.119489]).bindPopup("It can get kinda crazy out in these streets").addTo(beware);
+
+            //Attribution
+            var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJ1Y2lmZXIiLCJhIjoiY2pvd2h3cW1hMXh4NTNycm5ma2hoa2tvdiJ9.SNkfNJLTyz9oo__Pd0CQZg';
+
+            //Map styles
+            var mapD = L.tileLayer(mbUrl, { id: 'mapbox.streets', attribution: mbAttr }),
+                outdoors = L.tileLayer(mbUrl, { id: 'mapbox.outdoors', attribution: mbAttr }),
+                dark = L.tileLayer(mbUrl, { id: 'mapbox.dark', attribution: mbAttr }),
+                sat = L.tileLayer(mbUrl, { id: 'mapbox.satellite', attribution: mbAttr }),
+                grayscale = L.tileLayer(mbUrl, { id: 'mapbox.light', attribution: mbAttr });
+
+            //Map properties
+            var newMap = L.map('finalMap', {
+                center: [39.951107, -75.181007],
+                zoom: 14,
+                layers: [mapD]
+            });
+
+            //Layers
+            var baseLayers = {
+                "Default": mapD,
+                "Grayscale": grayscale,
+                "Forest": outdoors,
+                "Dark": dark,
+                "Satellite": sat
+
+            };
+
+            //Overlays
+            var bathroomOverlays = {
+                "Bathrooms": bathrooms,
+                "City Buildings": cityBuildings,
+                "Museums": museums,
+                "Colleges": colleges,
+                "Parks": parks,
+                "Bike Rentals": bikeRental,
+                "Resturants": resturants,
+                "Amusements/Tourist Traps": amusements,
+                "Becareful": beware
+            };
+
+            var cityBuildingsOverlays = {
+
+            };
+
+            //Places layers onto map controls and adds to map
+            L.control.layers(baseLayers, bathroomOverlays).addTo(newMap);
+
+            //Algolia Search bar with app and api keys
+            var placesAutocomplete = places({
+                appId: 'plEYIFE9YUDF',
+                apiKey: '2987e1642c706e9271d60f44c1f3bafa',
+                container: document.querySelector('#citySearch')
+            });
+
+            //Search btn click event handler
+            $("#citySearchBtn").click(function () {
+                var location = $('#citySearch').val();
+                
+
+                $('#location').val(location);
+
+            });//end of search
+
+            //Flatpickr js stuff
+            //Options
+            var human = {
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+            }
+
+            var range = {
+                mode: "range"
+            }
+
+            var myOptions = {
+                minDate: "today",
+                maxDate: new Date().fp_incr(),
+                mode: "range",
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                //enableTime: true,
+                dateFormat: "H:i",
+            }
+
+            //Creates flatpickr instance
+            $("#flatpikrDiv").flatpickr(myOptions);
+
+            //Places flatpickr instance into a variable
+            calendar = $("#flatpikrDiv").flatpickr(myOptions);
+
+            //Clears divs
+            $('#days').val(" ");
+            $('#location').val(" ");
+            
+            //Search btn click event handler
+            $("#confirmDatesBtn").click(function () {
+
+                //Places calendar in div
+                confirmDays = calendar.selectedDates[0];
+                confirmEndDays = calendar.selectedDates[1];
+
+                //Formats dates
+                var days = calendar.formatDate(confirmDays, "F j, Y");
+                var endDays = calendar.formatDate(confirmEndDays, "F j, Y");
+
+                //Places formatted dates in div
+                $('#days').val(days + " to " + endDays);
+            });//end of date
+
+
+            //CurrencyFormatter
+            //Clear input
+            //$("#currency").val("");
+
+            //Place a value into input
+            $("#currency").val("100.000000");
+
+            var formatter = OSREC.CurrencyFormatter.getFormatter
+                ({/*
+                 * 
+                 * French example from CurrencyConverter site
+                    // If currency is not supplied, defaults to USD
+                    currency: 'EUR',
+
+                    // Use to override the currency's default symbol
+                    symbol: '€',
+
+                    // Use to override the currency's default locale - every locale has
+                    // preconfigured decimal, group and pattern
+                    locale: 'fr',
+
+                    // Use to override the locale's default decimal character
+                    decimal: ',',
+
+                    // Use to override the locale's default group (thousand separator) character
+                    group: '.',
+
+                    // Use to override the locale's default display pattern
+                    // Note comma = group separator, dot = decimal separator, exclamation = symbol
+                    // Follows standard unicode currency pattern
+                    pattern: '#,##0.00 !',
+                    */
+                    // Return this value if the input value is not a valid number
+                    // Defaults to '0'
+                    valueOnError: '0'
+                });
+
+            //Grabs currency
+            var value = $("#currency").val();
+
+            //Places formatted currency into variable
+            var formatted = formatter(value);
+
+            //Displays formatted currency
+            $("#currency").val(formatted);
+        });// end of ready
+    </script>
+</body>
+</html>
